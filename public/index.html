@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carta MenYu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <div class="announcement" role="region" aria-live="polite" id="announcement">
+        <div class="announcement-inner">
+            <div class="marquee">
+                <div class="marquee-track" id="marquee-track">
+                    <span class="marquee-chunk"><i class="fa-solid fa-bullhorn"></i><span
+                            id="announcement-text-1"></span></span>
+                    <span class="marquee-chunk"><i class="fa-solid fa-bullhorn"></i><span
+                            id="announcement-text-2"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="language-selector">
+            <div class="language-toggle">
+                <button class="language-btn active" data-lang="es">ES</button>
+                <button class="language-btn" data-lang="en">EN</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1 id="restaurant-name"></h1>
+            <p id="restaurant-tagline"></p>
+        </div>
+
+        <div class="category-slider-wrapper">
+            <div id="category-slider" class="category-slider"></div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-items" id="menu-items"></div>
+            <div id="category-links" class="category-links"></div>
+        </div>
+    </div>
+
+    <!-- Side Drawer for Cart -->
+    <div class="side-drawer-overlay" id="side-drawer-overlay"></div>
+    <div class="side-drawer" id="side-drawer">
+        <div class="drawer-header">
+            <h2 id="drawer-title">Tu Pedido</h2>
+            <button class="drawer-close-btn" id="close-drawer"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="drawer-content" id="drawer-content">
+            <!-- Cart items will be injected here -->
+        </div>
+        <div class="drawer-footer">
+            <div class="order-total">
+                <span>Total</span>
+                <span id="drawer-total">0,00 €</span>
+            </div>
+            <button class="checkout-btn">Realizar pedido</button>
+        </div>
+    </div>
+
+    <button class="order-button" id="order-button">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="order-count" id="order-count">0</span>
+    </button>
+
+    <!-- 3-Column Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Info</h3>
+                <p id="footer-address">Cargando dirección...</p>
+                <p id="footer-phone">Cargando teléfono...</p>
+                <a href="#" id="footer-email">Cargando email...</a>
+            </div>
+            <div class="footer-col">
+                <h3>Horarios</h3>
+                <p id="footer-hours">Cargando horarios...</p>
+            </div>
+            <div class="footer-col">
+                <h3>Síguenos</h3>
+                <div class="social-links" id="footer-social">
+                    <!-- Social icons injected by JS -->
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Hecho con ❤️ por <a href="https://www.instagram.com/the.menyu.oficial/" target="_blank" rel="noopener"
+                    style="color: inherit; text-decoration: none;">MenYu</a></p>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-content">
+            <p class="cookie-text">
+                Utilizamos cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad
+                relacionada con sus preferencias mediante el análisis de sus hábitos de navegación.
+            </p>
+            <div class="cookie-actions">
+                <button class="cookie-btn cookie-reject" id="cookie-reject">Rechazar</button>
+                <button class="cookie-btn cookie-accept" id="cookie-accept">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
