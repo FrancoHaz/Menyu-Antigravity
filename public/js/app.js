@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const drawerTitle = document.getElementById('drawer-title');
     const drawerContent = document.getElementById('drawer-content');
     const drawerTotal = document.getElementById('drawer-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const deliveryNoteInput = document.getElementById('delivery-note');
 
     const languageToggle = document.querySelector('.language-toggle');
 
@@ -396,6 +398,56 @@ document.addEventListener('DOMContentLoaded', () => {
         cookieBanner.classList.remove('show');
     }
 
+    // --- WhatsApp Checkout ---
+    function checkoutToWhatsApp() {
+        if (cart.length === 0) {
+            alert(currentLang === 'en' ? 'Your cart is empty!' : '¡Tu carrito está vacío!');
+            return;
+        }
+
+        // Get phone number from config
+        const phoneNumber = (config.telefono_whatsapp || config.telefono || '').trim().replace(/[^0-9]/g, '');
+
+        if (!phoneNumber) {
+            alert(currentLang === 'en' ? 'WhatsApp number not configured' : 'Número de WhatsApp no configurado');
+            return;
+        }
+
+        // Build the message
+        let message = currentLang === 'en' ? 'Hello! I want to order: 🛵\n\n' : 'Hola! Quiero pedir: 🛵\n\n';
+
+        let total = 0;
+        cart.forEach(item => {
+            const name = item[`Nombre_${currentLang}`] || item.Nombre_es || item.Nombre_en || '';
+            const itemPrice = toNumber(item.Precio);
+            const itemTotal = itemPrice * item.quantity;
+            total += itemTotal;
+
+            message += `▪️ ${item.quantity}x ${name}\n`;
+        });
+
+        message += `\n💰 Total: ${total.toFixed(2).replace('.', ',')} €\n`;
+
+        // Add delivery note if provided
+        const deliveryNote = deliveryNoteInput.value.trim();
+        if (deliveryNote) {
+            message += `📍 ${deliveryNote}`;
+        } else {
+            message += `📍 ${currentLang === 'en' ? 'Table/Address: (please specify)' : 'Mesa/Dirección: (por favor especificar)'}`;
+        }
+
+        // Encode and open WhatsApp
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+        window.open(whatsappUrl, '_blank');
+
+        // Optionally clear cart after sending
+        // cart = [];
+        // updateCartUI();
+        // closeDrawer();
+    }
+
     // --- Event Listeners ---
     function setupEventListeners() {
         languageToggle.addEventListener('click', e => {
@@ -416,6 +468,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cookie events
         cookieAccept.addEventListener('click', () => handleCookieConsent(true));
         cookieReject.addEventListener('click', () => handleCookieConsent(false));
+
+        // Checkout event
+        checkoutBtn.addEventListener('click', checkoutToWhatsApp);
 
         setupCategoryListeners();
         setupMenuItemListeners();
